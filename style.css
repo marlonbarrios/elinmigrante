@@ -1,0 +1,31 @@
+/* Perfect centering with no margins */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Centering the canvas inside the main element */
+main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Inmigrante | An Endless Tale of Memory and Loss</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #111111;
+            color: #f5f5f5;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #999999;
+            font-size: 1.4rem;
+            margin: 2rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid #555555;
+        }
+
+        .enter-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: #444444;
+            color: #f5f5f5;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        .enter-btn:hover {
+            background: #666666;
+            transform: translateY(-2px);
+        }
+
+        .credits {
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .credits a {
+            color: #999999;
+            text-decoration: none;
+        }
+
+        .credits a:hover {
+            text-decoration: underline;
+        }
+
+        #app {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111111;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="landing">
+        <h1>El Inmigrante</h1>
+        <p class="description">Un microcuento de Luis Felipe Lomelí genera un diálogo infinito.</p>
+        
+        <div class="quote">
+            "—¿Olvidaste algo?<br>
+            —Si tan solo."
+        </div>
+
+        <p class="explanation">A partir de estas dos líneas, la inteligencia artificial crea nuevos pares de frases sobre el exilio, la memoria y la pérdida.</p>
+        
+        <p class="continuation">Un diálogo sin fin que atraviesa idiomas y culturas, explorando la experiencia del desplazamiento.</p>
+
+        <button class="enter-btn" id="startButton">Entrar a la Instalación</button>
+
+        <div class="credits">
+            Creado por <a href="https://github.com/marlonbarrios">Marlon Barrios Solano</a><br>
+            Basado en "El Emigrante" de <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>
+        </div>
+    </div>
+
+    <div id="app">
+        <main></main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+    <script type="module">
+        // Only load the sketch when the button is clicked
+        document.getElementById('startButton').addEventListener('click', async () => {
+            document.getElementById('landing').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            
+            // Store the selected language in localStorage
+            localStorage.setItem('selectedLanguage', currentLandingLanguage);
+            
+            // Dynamically import the sketch
+            const sketch = await import('./sketch.js');
+        });
+    </script>
+
+    <script>
+    // Add this before the closing </body> tag
+    const LANDING_TEXT = {
+      'Español': {
+        title: 'El Inmigrante',
+        description: 'Un microcuento de Luis Felipe Lomelí genera un diálogo infinito.',
+        quote: ['—¿Olvida usted algo?', '—Ojalá.'],
+        explanation: 'A partir de estas dos líneas, la inteligencia artificial crea nuevos pares de frases sobre el exilio, la memoria y la pérdida.',
+        continuation: 'Un diálogo sin fin que atraviesa idiomas y culturas, explorando la experiencia del desplazamiento.',
+        button: 'Entrar a la Instalación',
+        credits: 'Creado por',
+        basedOn: 'Basado en "El Emigrante" de <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'English': {
+        title: 'El Inmigrante',
+        description: 'A microstory by Luis Felipe Lomelí generates an infinite dialogue.',
+        quote: ["—Forgettin' something?", '—If only.'],
+        explanation: 'From these two lines, artificial intelligence creates new pairs of sentences about exile, memory, and loss.',
+        continuation: 'An endless dialogue across languages and cultures, exploring the experience of displacement.',
+        button: 'Enter Installation',
+        credits: 'Created by',
+        basedOn: 'Based on "The Emigrant" by <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Français': {
+        title: 'El Inmigrante',
+        description: 'Un microrécit de Luis Felipe Lomelí génère un dialogue infini.',
+        quote: ['—Tu oublies quelque chose ?', '—Si seulement.'],
+        explanation: 'À partir de ces deux lignes, l\'intelligence artificielle crée de nouvelles paires de phrases sur l\'exil, la mémoire et la perte.',
+        continuation: 'Un dialogue sans fin à travers les langues et les cultures, explorant l\'expérience du déplacement.',
+        button: 'Entrer dans l\'Installation',
+        credits: 'Créé par',
+        basedOn: 'Basé sur "L\'Émigrant" de <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Deutsch': {
+        title: 'El Inmigrante',
+        description: 'Eine Mikroerzählung von Luis Felipe Lomelí generiert einen endlosen Dialog.',
+        quote: ['—Vergisst du etwas?', '—Wenn nur.'],
+        explanation: 'Aus diesen zwei Zeilen erschafft künstliche Intelligenz neue Satzpaare über Exil, Erinnerung und Verlust.',
+        continuation: 'Ein endloser Dialog über Sprachen und Kulturen hinweg, der die Erfahrung der Vertreibung erkundet.',
+        button: 'Installation Betreten',
+        credits: 'Erstellt von',
+        basedOn: 'Basierend auf "Der Emigrant" von <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Ελληνικά': {
+        title: 'El Inmigrante',
+        description: 'Μια μικροϊστορία του Luis Felipe Lomelí δημιουργεί έναν ατέλειωτο διάλογο.',
+        quote: ['—Ξεχνάς κάτι;', '—Μακάρι μόνο.'],
+        explanation: 'Από αυτές τις δύο γραμμές, η τεχνητή νοημοσύνη δημιουργεί νέα ζεύγη προτάσεων για την εξορία, τη μνήμη και την απώλεια.',
+        continuation: 'Ένας ατέλειωτος διάλογος μεταξύ γλωσσών και πολιτισμών, που εξερευνά την εμπειρία του εκτοπισμού.',
+        button: 'Είσοδος στην Εγκατάσταση',
+        credits: 'Δημιουργήθηκε από',
+        basedOn: 'Βασισμένο στο "Ο Μετανάστης" του <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Türkçe': {
+        title: 'El Inmigrante',
+        description: 'Luis Felipe Lomelí\'nin mikro öyküsü sonsuz bir diyalog yaratıyor.',
+        quote: ['—Bir şey mi unuttun?', '—Keşke.'],
+        explanation: 'Bu iki satırdan yola çıkarak, yapay zeka sürgün, bellek ve kayıp üzerine yeni cümle çiftleri oluşturuyor.',
+        continuation: 'Diller ve kültürler arasında, yerinden edilme deneyimini keşfeden sonsuz bir diyalog.',
+        button: 'Enstalasyona Gir',
+        credits: 'Yaratan',
+        basedOn: '"Göçmen" <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a> tarafından'
+      },
+      'Polski': {
+        title: 'El Inmigrante',
+        description: 'Mikropowieść Luisa Felipe Lomelí generuje nieskończony dialog.',
+        quote: ['—Coś zapomniałeś?', '—Gdyby tylko.'],
+        explanation: 'Z tych dwóch linii sztuczna inteligencja tworzy nowe pary zdań o wygnaniu, pamięci i stracie.',
+        continuation: 'Niekończący się dialog między językami i kulturami, badającymy doświadczenie przemieszczenia.',
+        button: 'Wejdź do Instalacji',
+        credits: 'Stworzone przez',
+        basedOn: 'Na podstawie "Emigrant" autorstwa <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Nederlands': {
+        title: 'El Inmigrante',
+        description: 'Een microverhaal van Luis Felipe Lomelí genereert een oneindige dialoog.',
+        quote: ['—Iets vergeten?', '—Was het maar zo.'],
+        explanation: 'Uit deze twee regels creëert kunstmatige intelligentie nieuwe zinnenparen over ballingschap, geheugen en verlies.',
+        continuation: 'Een eindeloze dialoog tussen talen en culturen, die de ervaring van ontheemding verkent.',
+        button: 'Installatie Betreden',
+        credits: 'Gemaakt door',
+        basedOn: 'Gebaseerd op "De Emigrant" door <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Svenska': {
+        title: 'El Inmigrante',
+        description: 'En mikroberättelse av Luis Felipe Lomelí genererar en oändlig dialog.',
+        quote: ['—Glömmer du något?', '—Om bara.'],
+        explanation: 'Från dessa två rader skapar artificiell intelligens nya meningspar om exil, minne och förlust.',
+        continuation: 'En oändlig dialog över språk och kulturer, som utforskar erfarenheten av förflyttning.',
+        button: 'Gå in i Installationen',
+        credits: 'Skapad av',
+        basedOn: 'Baserad på "Emigranten" av <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Čeština': {
+        title: 'El Inmigrante',
+        description: 'Mikropovídka Luise Felipe Lomelího generuje nekonečný dialog.',
+        quote: ['—Zapomněl jsi něco?', '—Kéž by jen.'],
+        explanation: 'Z těchto dvou řádků vytváří umělá inteligence nové páry vět o exilu, paměti a ztrátě.',
+        continuation: 'Nekonečný dialog napříč jazyky a kulturami, zkoumající zkušenost vysídlení.',
+        button: 'Vstoupit do Instalace',
+        credits: 'Vytvořil',
+        basedOn: 'Na základě "Emigrant" od <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Tiếng Việt': {
+        title: 'El Inmigrante',
+        description: 'Một truyện ngắn của Luis Felipe Lomelí tạo ra cuộc đối thoại vô tận.',
+        quote: ['—Quên gì à?', '—Giá mà thế.'],
+        explanation: 'Từ hai dòng này, trí tuệ nhân tạo tạo ra những cặp câu mới về lưu vong, ký ức và mất mát.',
+        continuation: 'Một cuộc đối thoại bất tận xuyên ngôn ngữ và văn hóa, khám phá trải nghiệm của sự di dời.',
+        button: 'Vào Tác Phẩm',
+        credits: 'Sáng tạo bởi',
+        basedOn: 'Dựa trên "Người Di Cư" của <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'ไทย': {
+        title: 'El Inmigrante',
+        description: 'เรื่องสั้นจิ๋วของ Luis Felipe Lomelí สร้างบทสนทนาไม่รู้จบ',
+        quote: ['—ลืมอะไรหรือเปล่า?', '—ถ้าเพียงแค่นั้น'],
+        explanation: 'จากสองบรรทัดนี้ ปัญญาประดิษฐ์สร้างคู่ประโยคใหม่เกี่ยวกับการเนรเทศ ความทรงจำ และการสูญเสีย',
+        continuation: 'บทสนทนาไม่รู้จบข้ามภาษาและวัฒนธรรม สำรวจประสบการณ์ของการพลัดถิ่น',
+        button: 'เข้าสู่งานศิลปะ',
+        credits: 'สร้างสรรค์โดย',
+        basedOn: 'อ้างอิงจาก "ผู้อพยพ" โดย <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      '中文': {
+        title: 'El Inmigrante',
+        description: '路易斯·费利佩·洛梅利的微型小说生成无尽对话。',
+        quote: ['—您忘了？', '—但愿如此！'],
+        explanation: '从这两行开始，人工智能创造关于流亡、记忆和失落的新对话。',
+        continuation: '跨越语言和文化的永恒对话，探索离散的普遍经验。',
+        button: '进入装置',
+        credits: '创作者',
+        basedOn: '基于路易斯·费利佩·洛梅利的《移民》'
+      },
+      'Українська': {
+        title: 'El Inmigrante',
+        description: 'Мікрооповідання Луїса Феліпе Ломелі породжує нескінченний діалог.',
+        quote: ['—Щось забули?', '—Якби лише.'],
+        explanation: 'З цих двох рядків штучний інтелект створює нові пари речень про вигнання, пам\'ять і втрату.',
+        continuation: 'Безкінечний діалог через мови та культури, що досліджує досвід переміщення.',
+        button: 'Увійти до інсталяції',
+        credits: 'Створено',
+        basedOn: 'На основі "Емігрант" <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Луїса Феліпе Ломелі</a>'
+      },
+      'Kiswahili': {
+        title: 'El Inmigrante',
+        description: 'Hadithi fupi ya Luis Felipe Lomelí inazalisha mazungumzo yasiyo na mwisho.',
+        quote: ['—Umekosea kitu?', '—Laiti.'],
+        explanation: 'Kutoka mistari hii miwili, akili bandia inatengeneza jozi mpya za sentensi kuhusu uhamiaji, kumbukumbu na hasara.',
+        continuation: 'Mazungumzo yasiyo na mwisho kote lugha na tamaduni, yakichunguza uzoefu wa uhamishaji.',
+        button: 'Ingia kwenye Maonyesho',
+        credits: 'Imetengenezwa na',
+        basedOn: 'Kulingana na "Mhamiaji" wa <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Yoruba': {
+        title: 'El Inmigrante',
+        description: 'Itan kukuru ti Luis Felipe Lomelí ṣe idariwesi ijalọ ailopin.',
+        quote: ['—Ṣe o gbàgbé nǹkan?', '—Bóyá.'],
+        explanation: 'Lati awọn ila meji wọnyi, ọpọlọ artificial ṣẹda awọn ẹya ọrọ tuntun nipa ìsọtẹlẹ, iranti ati padanu.',
+        continuation: 'Ijálọ ailopin kọja ede ati asa, ṣiṣayẹwo iriri ìyípadà.',
+        button: 'Wọle si Fiṣiṣẹ',
+        credits: 'Ṣe nipasẹ',
+        basedOn: 'Lori "Aṣálẹ" ti <a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      },
+      'Amharic': {
+        title: 'El Inmigrante',
+        description: 'በሉዊስ ፌሊፔ ሎሜሊ የተጻፈው አጭር ታሪክ ማለቂያ የሌለውን ውይይት ያመነጫል።',
+        quote: ['—አንድ ነገር ረሱ?', '—እንደሆነ ኖሮ.'],
+        explanation: 'ከእነዚህ ሁለት መስመሮች በመነሳት፣ ሰው አምሳያ አስተዳዳሪ ስለ ስደት፣ ትዝታ እና ማጣት አዳዲስ ጥንድ አረፍተ ነገሮች ይፈጥራል።',
+        continuation: 'በቋንቋዎችና ባህሎች ላይ የሚያልፍ ማለቂያ የሌለው ውይይት፣ የመፈናቀል ተሞክሮን በማራምድ።',
+        button: 'ወደ ማስተግበሪያ ግባ',
+        credits: 'በፈጠረው',
+        basedOn: 'በ<a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">ሉዊስ ፌሊፔ ሎሜሊ</a> የ"ፈላጊው" ላይ የተመሠረተ'
+      },
+      'isiZulu': {
+        title: 'El Inmigrante',
+        description: 'Indaba emfushane ka-Luis Felipe Lomelí ikhiqiza ingxoxo engagcini.',
+        quote: ['—Ukhohliwe into?', '—Kube ngabe.'],
+        explanation: 'Kusukela kulayini ezimbili, ubuhlakani bokwenziwa budala amapheya amasha amasho mayelana nokudutshulwa, inkumbulo nokulahlekelwa.',
+        continuation: 'Ingxoxo engagcini kuzo zonke izilimi namasiko, iphenya isipiliyoni sokudutshulwa.',
+        button: 'Ngena ku-Installation',
+        credits: 'Yakhiwe ngu',
+        basedOn: 'Ngokusekelwe ku-"Umfuduki" ka-<a href="https://www.latam.ufl.edu/people/center-based-faculty/luis-felipe-lomeli/" target="_blank">Luis Felipe Lomelí</a>'
+      }
+    };
+
+    let currentLandingLanguage = 'Español';
+
+    function createLandingLanguageSelector() {
+      const select = document.createElement('select');
+      select.style.position = 'fixed';
+      select.style.top = '20px';
+      select.style.right = '20px';
+      select.style.padding = '8px';
+      select.style.fontSize = '16px';
+      select.style.backgroundColor = '#111111';
+      select.style.color = '#f5f5f5';
+      select.style.border = '2px solid #666666';
+      select.style.borderRadius = '4px';
+      select.style.cursor = 'pointer';
+
+      Object.keys(LANDING_TEXT).forEach(lang => {
+        const option = document.createElement('option');
+        option.value = lang;
+        option.text = lang;
+        select.appendChild(option);
+      });
+
+      select.addEventListener('change', (e) => {
+        currentLandingLanguage = e.target.value;
+        updateLandingText();
+      });
+
+      document.body.appendChild(select);
+    }
+
+    function updateLandingText() {
+      const text = LANDING_TEXT[currentLandingLanguage];
+      document.querySelector('h1').textContent = text.title;
+      document.querySelector('.description').textContent = text.description;
+      document.querySelector('.quote').innerHTML = `"${text.quote[0]}<br>${text.quote[1]}"`;
+      document.querySelector('.explanation').textContent = text.explanation;
+      document.querySelector('.continuation').textContent = text.continuation;
+      document.querySelector('.enter-btn').textContent = text.button;
+      document.querySelector('.credits').innerHTML = `${text.credits} <a href="https://github.com/marlonbarrios">Marlon Barrios Solano</a><br>${text.basedOn}`;
+    }
+
+    // Initialize language selector
+    createLandingLanguageSelector();
+    </script>
+</body>
+</html>
